@@ -17,7 +17,7 @@ void exitd() {
 void echo() {
   std::string buffer;
   std::getline(std::cin, buffer);
-  std::cout << buffer << std::endl;
+  std::cout << buffer.substr(1, buffer.length()-1) << std::endl;
 }
 
 int main() {
