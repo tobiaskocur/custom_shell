@@ -34,6 +34,9 @@ void type_cmd() {
   for (int i = 0; i < std::size(commands); i++) {
     if (buffer == commands[i].name) {
       std::cout << commands[i].description << std::endl;
+    } else {
+      std::cout << buffer << std::endl;
+      std::cout << "Bad luck" << std::endl;
     }
   }
 };
