@@ -46,9 +46,19 @@ void type_cmd() {
       std::string bufferx;
       std::string result;
       while (!path.empty()) {
-        bufferx = path.substr(0, path.find(':'));
-        path = path.substr(path.find(':')+1);
-        std::cout << bufferx << std::endl;
+        size_t colon_pos = path.find(':');
+
+        if (colon_pos == std::string::npos) {
+          // Posledný segment – žiadna ':' už nie je
+          bufferx = path;
+          path.clear();  // skonči while
+        } else {
+          bufferx = path.substr(0, colon_pos);
+          path = path.substr(colon_pos + 1);
+        }
+
+        std::cout << "Checking: " << bufferx << std::endl;
+
 
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
           if (p.path().filename().string() == buffer) {
