@@ -36,6 +36,7 @@ int main() {
     for (int i = 0; i < commands->length(); i++) {
       if (cmd == commands[i]) {
         functions[i]();
+        break;
       } else if (i == commands->length()-1 && cmd != commands[i]) {
         error_message(cmd);
       }
