@@ -45,7 +45,7 @@ void type_cmd() {
 
       std::string bufferx;
       std::string result;
-      while (path.length() > 0) {
+      while (!path.empty()) {
         bufferx = path.substr(0, path.find(':'));
         path = path.substr(path.find(':')+1, path.length());
         std::cout << bufferx << std::endl;
