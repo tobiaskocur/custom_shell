@@ -39,7 +39,7 @@ void type_cmd() {
     }
 
     if (i == std::size(commands)-1 && buffer != commands[i].name) {
-      error_message(buffer);
+      std::cerr << buffer << ": not found" << std::endl;
     }
   }
 };
