@@ -10,22 +10,33 @@ void error_message(const std::string &cmd) {
   std::cerr << cmd << ": command not found" << std::endl;
 }
 
-void exitd() {
+void exit_cmd() {
   std::exit(0);
 }
 
-void echo() {
+void echo_cmd() {
   std::string buffer;
   std::getline(std::cin, buffer);
   std::cout << buffer.substr(1, buffer.length()-1) << std::endl;
 }
 
 
-
 command commands[] = {
-  command("echo", "test", echo),
-  command("exit", "exit", exitd),
+  command("echo", "echo is a shell builtin", echo_cmd),
+  command("exit", "exit is a shell builtin", exit_cmd),
+  command("type", "type is a shell builtin", nullptr),
 };
+
+void type_cmd() {
+  std::string buffer;
+  std::getline(std::cin, buffer);
+
+  for (int i = 0; i < std::size(commands); i++) {
+    if (buffer == commands[i].name) {
+      std::cout << commands[i].description << std::endl;
+    }
+  }
+}
 
 int main() {
   // Flush after every std::cout / std:cerr

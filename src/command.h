@@ -14,9 +14,10 @@ class command {
         void (*function)();
 
         command(std::string n, std::string d, void (*exec)()) : name(std::move(n)),
-                                                                description(std::move(d)),
-                                                                function(exec) {}
+                                                description(std::move(d)),
+                                                function(exec){}
 
+        void add_function(void (*exec)());
         void execute() const { this->function(); }
 };
 

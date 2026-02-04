@@ -4,3 +4,6 @@
 
 #include "command.h"
 
+void command::add_function(void (*exec)()) {
+    this->function = exec;
+};
