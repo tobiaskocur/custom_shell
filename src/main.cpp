@@ -2,7 +2,7 @@
 #include <string>
 
 void error_message(const std::string &cmd) {
-  std::cerr << cmd << " was not found" << std::endl;
+  std::cerr << cmd << ": command not found" << std::endl;
 }
 
 int main() {
