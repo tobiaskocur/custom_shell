@@ -4,8 +4,6 @@
 #include <cstdlib>
 #include "command.h"
 
-typedef std::function<void()>(*Action);
-typedef void (*cmd_one_param)(std::string param);
 void error_message(const std::string &cmd) {
   std::cerr << cmd << ": command not found" << std::endl;
 }
@@ -55,6 +53,8 @@ int main() {
 
     std::string cmd;
     std::cin >> cmd;
+
+    std::cout << "$PATH" << std::endl;
 
     for (int i = 0; i < std::size(commands); i++) {
       if (cmd == commands[i].name) {
