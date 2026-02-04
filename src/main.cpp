@@ -49,13 +49,14 @@ void type_cmd() {
         bufferx = path.substr(0, path.find(':'));
         path = path.substr(path.find(':')+1, path.length());
 
-        if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
           if (p.path().string().substr(5, p.path().string().length()) == buffer) {
             result = p.path().string();
             break;
           }
         }
+
+        if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
       }
       if (result == "") {
         std::cerr << buffer << ": not found" << std::endl;
@@ -77,7 +78,6 @@ int main() {
     std::string cmd;
     std::cin >> cmd;
 
-    std::cout << "$PATH" << std::endl;
 
     for (int i = 0; i < std::size(commands); i++) {
       if (cmd == commands[i].name) {
