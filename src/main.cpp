@@ -36,8 +36,9 @@ int main() {
     for (int i = 0; i < commands->length(); i++) {
       if (cmd == commands[i]) {
         functions[i]();
+      } else if (i == commands->length() - 1) {
+        error_message(cmd);
       }
     }
-    error_message(cmd);
   }
 }
