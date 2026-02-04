@@ -67,7 +67,7 @@ void type_cmd() {
           }
         }
 
-      //  if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
+      if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
       }
       if (result == "") {
         std::cerr << buffer << ": not found" << std::endl;
