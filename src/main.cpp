@@ -16,6 +16,10 @@ int main() {
     std::string line;
     std::getline(std::cin, line);
 
+    if (line == "exit") {
+      exit(0);
+    }
+
     error_message(line);
   }
 }
