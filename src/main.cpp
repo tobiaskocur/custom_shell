@@ -53,7 +53,7 @@ void type_cmd() {
     path = path.substr(path.find(':')+1, path.length());
 
     for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
-      if (p.path().string().find(buffer) != std::string::npos) {
+      if (p.path().string().substr(5, p.path().string().length()) == buffer) {
         std::cout << p.path().string() << std::endl;
       }
     }
