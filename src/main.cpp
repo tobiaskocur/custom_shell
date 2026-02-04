@@ -34,9 +34,9 @@ void type_cmd() {
   std::string path = std::getenv("PATH");
 
   std::string bufferx;
-  while (path.length() <= 0) {
+  while (path.length() > 0) {
     bufferx = path.substr(0, path.find(':'));
-    path = path.substr(path.find(':'), path.length());
+    path = path.substr(path.find(':')+1, path.length());
 
     for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
       std::cout << p;
