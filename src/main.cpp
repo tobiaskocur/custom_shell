@@ -49,7 +49,7 @@ void type_cmd() {
   std::filesystem::path path = std::getenv("PATH");
 
   for (const auto &p : std::filesystem::directory_iterator(path)) {
-    std::cout << p.path().string() << std::endl;
+    std::cout << p << std::endl;
   }
 };
 
