@@ -58,8 +58,11 @@ void type_cmd() {
 
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
           if (p.path().filename().string() == buffer) {
-            result = p.path().string();
-            break;
+            std::filesystem::perms px = std::filesystem::status(p.path()).permissions();
+            if (std::filesystem::perms::none == (std::filesystem::perms::others_exec & px)) {
+              result = p.path().string();
+              break;
+            }
           }
         }
 
