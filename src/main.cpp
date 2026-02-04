@@ -36,6 +36,10 @@ void type_cmd() {
     if (buffer == commands[i].name) {
       std::cout << commands[i].description << std::endl;
     }
+
+    if (i == std::size(commands)-1 && buffer != commands[i].name) {
+      error_message(buffer);
+    }
   }
 };
 
