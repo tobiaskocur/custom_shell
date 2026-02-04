@@ -48,6 +48,7 @@ void type_cmd() {
       while (path.length() > 0) {
         bufferx = path.substr(0, path.find(':'));
         path = path.substr(path.find(':')+1, path.length());
+        std::cout << bufferx << std::endl;
 
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
           if (p.path().string().substr(5, p.path().string().length()) == buffer) {
@@ -56,7 +57,7 @@ void type_cmd() {
           }
         }
 
-        if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
+      //  if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
       }
       if (result == "") {
         std::cerr << buffer << ": not found" << std::endl;
