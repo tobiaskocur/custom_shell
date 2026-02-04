@@ -51,7 +51,7 @@ void type_cmd() {
         std::cout << bufferx << std::endl;
 
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
-          if (p.path().string().substr(5, p.path().string().length()) == buffer) {
+          if (p.path().filename().string() == buffer) {
             result = p.path().string();
             break;
           }
