@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <filesystem>
+#include <fstream>
+
 #include "command.h"
 
 void error_message(const std::string &cmd) {
@@ -17,6 +20,7 @@ void echo_cmd() {
   std::getline(std::cin, buffer);
   std::cout << buffer.substr(1, buffer.length()-1) << std::endl;
 }
+
 
 
 command commands[] = {
@@ -39,6 +43,13 @@ void type_cmd() {
     if (i == std::size(commands)-1 && buffer != commands[i].name) {
       std::cerr << buffer << ": not found" << std::endl;
     }
+  }
+
+
+  std::filesystem::path path = std::getenv("PATH");
+
+  for (const auto &p : std::filesystem::directory_iterator(path)) {
+    std::cout << p.path().string() << std::endl;
   }
 };
 
