@@ -1,6 +1,8 @@
 #include <functional>
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include "command.h"
 
 typedef std::function<void()>(*Action);
 typedef void (*cmd_one_param)(std::string param);
@@ -11,7 +13,7 @@ void error_message(const std::string &cmd) {
 std::string commands[] = {"exit", "echo"};
 
 void exitd() {
-  exit(0);
+  std::exit(0);
 }
 
 void echo() {
@@ -19,6 +21,13 @@ void echo() {
   std::getline(std::cin, buffer);
   std::cout << buffer.substr(1, buffer.length()-1) << std::endl;
 }
+
+
+
+std::vector<command> commandos = {
+  command("echo", "test", echo),
+
+};
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -37,7 +46,8 @@ int main() {
       if (cmd == commands[i]) {
         functions[i]();
         break;
-      } else if (i == commands->length()-1 && cmd != commands[i]) {
+      }
+      if (i == commands->length()-1 && cmd != commands[i]) {
         error_message(cmd);
       }
     }
