@@ -30,6 +30,7 @@ command commands[] = {
 void type_cmd() {
   std::string buffer;
   std::getline(std::cin, buffer);
+  buffer = buffer.substr(1, buffer.length()-1);
 
   for (int i = 0; i < std::size(commands); i++) {
     if (buffer == commands[i].name) {
