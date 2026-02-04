@@ -11,9 +11,13 @@ class command {
     public:
         std::string name;
         std::string description;
-        void *execute;
+        void (*function)();
 
-        command(std::string name, std::string description, void (*execute));
+        command(std::string n, std::string d, void (*exec)()) : name(std::move(n)),
+                                                                description(std::move(d)),
+                                                                function(exec) {}
+
+        void execute() const { this->function(); }
 };
 
 

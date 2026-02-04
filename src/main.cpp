@@ -10,8 +10,6 @@ void error_message(const std::string &cmd) {
   std::cerr << cmd << ": command not found" << std::endl;
 }
 
-std::string commands[] = {"exit", "echo"};
-
 void exitd() {
   std::exit(0);
 }
@@ -24,15 +22,14 @@ void echo() {
 
 
 
-std::vector<command> commandos = {
+command commands[] = {
   command("echo", "test", echo),
-
+  command("exit", "exit", exitd),
 };
 
 int main() {
   // Flush after every std::cout / std:cerr
 
-  void (*functions[])() = {exitd, echo};
   while (true) {
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
@@ -42,12 +39,12 @@ int main() {
     std::string cmd;
     std::cin >> cmd;
 
-    for (int i = 0; i < commands->length(); i++) {
-      if (cmd == commands[i]) {
-        functions[i]();
+    for (int i = 0; i < std::size(commands); i++) {
+      if (cmd == commands[i].name) {
+        commands[i].execute();
         break;
       }
-      if (i == commands->length()-1 && cmd != commands[i]) {
+      if (i == std::size(commands)-1 && cmd != commands[i].name) {
         error_message(cmd);
       }
     }
