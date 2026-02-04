@@ -36,11 +36,11 @@ void type_cmd() {
       std::cout << commands[i].description << std::endl;
     }
   }
-}
+};
 
 int main() {
   // Flush after every std::cout / std:cerr
-
+  commands[2].function = type_cmd;
   while (true) {
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
