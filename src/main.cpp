@@ -44,18 +44,20 @@ void type_cmd() {
       std::string path = std::getenv("PATH");
 
       std::string bufferx;
+      std::string result;
       while (path.length() > 0) {
         bufferx = path.substr(0, path.find(':'));
         path = path.substr(path.find(':')+1, path.length());
 
+        if (result != "") { break; };
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
           if (p.path().string().substr(5, p.path().string().length()) == buffer) {
-            std::cout << p.path().string() << std::endl;
+            result = p.path().string();
             break;
           }
         }
       }
-      if (bufferx == "") {
+      if (result == "") {
         std::cerr << buffer << ": not found" << std::endl;
       }
     }
