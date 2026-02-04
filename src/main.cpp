@@ -47,7 +47,7 @@ void type_cmd() {
       std::string result;
       while (!path.empty()) {
         bufferx = path.substr(0, path.find(':'));
-        path = path.substr(path.find(':')+1, path.length());
+        path = path.substr(path.find(':')+1);
         std::cout << bufferx << std::endl;
 
         for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
