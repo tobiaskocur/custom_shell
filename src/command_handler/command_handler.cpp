@@ -76,7 +76,7 @@ void command_handler::echo_cmd() {
 }
 
 void command_handler::exit_cmd() {
-    std::exit(1);
+    std::exit(0);
 }
 
 void command_handler::type_cmd() {
