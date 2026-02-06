@@ -28,41 +28,41 @@ int main() {
         break;
       }
 
-      // std::string exe_path = find_executable(cmd, false);
-      //
-      // if (!exe_path.empty()) {
-      //   std::string remaining;
-      //   std::getline(std::cin, remaining);
-      //
-      //   std::vector<std::string> args;
-      //   args.push_back(cmd);
-      //
-      //   std::istringstream iss(remaining);
-      //   std::string arg;
-      //   while (iss >> arg) {
-      //     args.push_back(arg);
-      //   }
-      //
-      //   std::vector<char *> argv;
-      //   for (auto &a : args) {
-      //     argv.push_back(const_cast<char *>(a.c_str()));
-      //   }
-      //
-      //   argv.push_back(nullptr);
-      //
-      //   pid_t pid = fork();
-      //   if (pid == 0) {
-      //     execvp(exe_path.c_str(), argv.data());
-      //     exit(1);
-      //   } else if (pid > 0) {
-      //     waitpid(pid, nullptr, 0);
-      //     break;
-      //   }
-      // }
-      //
-      // if (i == std::size(commands)-1 && cmd != commands[i].name) {
-      //   error_message(cmd);
-      // }
+      std::string exe_path = handler.find_executable(cmd, false);
+
+      if (!exe_path.empty()) {
+        std::string remaining;
+        std::getline(std::cin, remaining);
+
+        std::vector<std::string> args;
+        args.push_back(cmd);
+
+        std::istringstream iss(remaining);
+        std::string arg;
+        while (iss >> arg) {
+          args.push_back(arg);
+        }
+
+        std::vector<char *> argv;
+        for (auto &a : args) {
+          argv.push_back(const_cast<char *>(a.c_str()));
+        }
+
+        argv.push_back(nullptr);
+
+        pid_t pid = fork();
+        if (pid == 0) {
+          execvp(exe_path.c_str(), argv.data());
+          exit(1);
+        } else if (pid > 0) {
+          waitpid(pid, nullptr, 0);
+          break;
+        }
+      }
+
+      if (i == handler.number_of_commands && cmd != handler.get_commands()[i].name) {
+        command_handler::error_msg(cmd);
+      }
     }
   }
 }
