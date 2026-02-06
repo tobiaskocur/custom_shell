@@ -14,29 +14,34 @@ command_handler *g_handler;
 command_handler::command_handler() : commands{
     command("echo", "echo is a shell builtin", echo_cmd),
     command("exit", "exit is a shell builtin", exit_cmd),
-    command("type", "type is a shell builtin", type_cmd)
+    command("type", "type is a shell builtin", type_cmd),
+    command("pwd", "type is a shell builtin", pwd_cmd)
 } {
     g_handler = this;
 }
 
-void command_handler::error_msg(std::string cmd) {
+void command_handler::error_msg(const std::string& cmd) {
     std::cerr << cmd << ": not found" << std::endl;
 }
 
-std::string command_handler::find_executable(const std::string &exe, bool output) {
+std::string command_handler::find_executable(const std::string &exe, const bool output) {
     std::string path = std::getenv("PATH");
 
     std::string buffer;
     std::string result;
     while (!path.empty()) {
-        size_t colon_pos = path.find(':');
-
-        if (colon_pos == std::string::npos) {
+        if (const size_t colon_pos = path.find(':'); colon_pos == std::string::npos) {
             buffer = path;
             path.clear();
         } else {
             buffer = path.substr(0, colon_pos);
             path = path.substr(colon_pos + 1);
+        }
+
+        std::filesystem::path exe_path(buffer);
+
+        if (!std::filesystem::exists(exe_path) || !std::filesystem::is_directory(exe_path)) {
+            continue;
         }
 
         for (auto &p: std::filesystem::directory_iterator(buffer)) {
@@ -79,6 +84,11 @@ void command_handler::exit_cmd() {
     std::exit(0);
 }
 
+void command_handler::pwd_cmd() {
+    std::filesystem::path path = std::getenv("PWD");
+    std::cout << path.string() << std::endl;
+}
+
 void command_handler::type_cmd() {
     std::string buffer;
     std::getline(std::cin, buffer);
@@ -95,7 +105,7 @@ void command_handler::type_cmd() {
             break;
         }
 
-        if (i == 2 && buffer != cmds[i].name) {
+        if (i == g_handler->number_of_commands-1 && buffer != cmds[i].name) {
             if (!find_executable(buffer, true).empty()) {
                 return;
             }
@@ -104,7 +114,7 @@ void command_handler::type_cmd() {
     }
 }
 
-void command_handler::custom_exec_cmd(std::string cmd) {
+void command_handler::custom_exec_cmd(const std::string& cmd) {
     std::string exe_path = find_executable(cmd, true);
     if (!exe_path.empty()) {
         std::string remaining;
