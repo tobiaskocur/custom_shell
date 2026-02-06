@@ -15,7 +15,7 @@ command_handler::command_handler() : commands{
     command("echo", "echo is a shell builtin", echo_cmd),
     command("exit", "exit is a shell builtin", exit_cmd),
     command("type", "type is a shell builtin", type_cmd),
-    command("pwd", "type is a shell builtin", pwd_cmd)
+    command("pwd", "pwd is a shell builtin", pwd_cmd)
 } {
     g_handler = this;
 }
