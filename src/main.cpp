@@ -22,7 +22,7 @@ int main() {
     std::cin >> cmd;
 
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < handler.number_of_commands; i++) {
       if (cmd == handler.get_commands()[i].name) {
         handler.get_commands()[i].execute();
         break;
