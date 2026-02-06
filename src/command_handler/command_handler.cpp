@@ -10,7 +10,7 @@ command_handler* g_handler;
 
 command_handler::command_handler() : commands{ command("echo", "echo is a shell builtin", echo_cmd),
         command("exit", "exit is a shell builtin", exit_cmd),
-        command("type", "type is a shell builtin", nullptr)} {
+        command("type", "type is a shell builtin", type_cmd)} {
         g_handler = this;
 }
 
@@ -73,6 +73,9 @@ void command_handler::exit_cmd() {
 void command_handler::type_cmd() {
         std::string buffer;
         std::getline(std::cin, buffer);
+
+        if (buffer.empty()) { return; }
+
         buffer = buffer.substr(1, buffer.length()-1);
 
         command* cmds = g_handler->get_commands();
