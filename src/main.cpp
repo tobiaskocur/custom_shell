@@ -60,7 +60,7 @@ int main() {
         }
       }
 
-      if (i == handler.number_of_commands && cmd != handler.get_commands()[i].name) {
+      if (i == handler.number_of_commands-1 && cmd != handler.get_commands()[i].name) {
         command_handler::error_msg(cmd);
       }
     }
