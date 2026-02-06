@@ -1,34 +1,18 @@
-[![progress-banner](https://backend.codecrafters.io/progress/shell/71b680e6-9056-419b-b47d-77f0ad2a91bf)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+# custom_shell
 
-This is a starting point for C++ solutions to the
-["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
+Custom POSIX-compliant shell in C++ – parses commands, runs externals/builtins (cd, pwd, echo, type, exit).
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
-interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
+[![Stage Progress](https://img.shields.io/badge/stages-5%2F12-green)](https://app.codecrafters.io/c/tobiaskocur/s/shell)
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+## Features
+- REPL loop
+- Builtins: `exit`, `echo`, `pwd`, `cd`, `type`
+- PATH search + exec perms check [your fix!]
+- Robust dir iteration (skips missing paths)
 
-# Passing the first stage
-
-The entry point for your `shell` implementation is in `src/main.cpp`. Study and
-uncomment the relevant code, and push your changes to pass the first stage:
-
-```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
-```
-
-Time to move on to the next stage!
-
-# Stage 2 & beyond
-
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `cmake` installed locally
-1. Run `./your_program.sh` to run your program, which is implemented in
-   `src/main.cpp`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+## Build & Run
+```bash
+mkdir build && cd build
+cmake ..
+make
+./shell
