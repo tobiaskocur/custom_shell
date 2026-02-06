@@ -4,99 +4,65 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <unistd.h>
+#include <sys/wait.h>
+#include "command/command.h"
+#include "command_handler/command_handler.h"
 
-#include "command.h"
-
-void error_message(const std::string &cmd) {
-  std::cerr << cmd << ": command not found" << std::endl;
-}
-
-void exit_cmd() {
-  std::exit(0);
-}
-
-void echo_cmd() {
-  std::string buffer;
-  std::getline(std::cin, buffer);
-  std::cout << buffer.substr(1, buffer.length()-1) << std::endl;
-}
-
-
-
-command commands[] = {
-  command("echo", "echo is a shell builtin", echo_cmd),
-  command("exit", "exit is a shell builtin", exit_cmd),
-  command("type", "type is a shell builtin", nullptr),
-};
-
-void type_cmd() {
-  std::string buffer;
-  std::getline(std::cin, buffer);
-  buffer = buffer.substr(1, buffer.length()-1);
-
-  for (int i = 0; i < std::size(commands); i++) {
-    if (buffer == commands[i].name) {
-      std::cout << commands[i].description << std::endl;
-      break;
-    }
-
-    if (i == std::size(commands)-1 && buffer != commands[i].name) {
-      std::string path = std::getenv("PATH");
-
-      std::string bufferx;
-      std::string result;
-      while (!path.empty()) {
-        size_t colon_pos = path.find(':');
-
-        if (colon_pos == std::string::npos) {
-          bufferx = path;
-          path.clear();
-        } else {
-          bufferx = path.substr(0, colon_pos);
-          path = path.substr(colon_pos + 1);
-        }
-
-        for ( auto &p : std::filesystem::directory_iterator(bufferx)) {
-          if (p.path().filename().string() == buffer) {
-            std::filesystem::perms px = std::filesystem::status(p.path()).permissions();
-            if (std::filesystem::perms::none != (std::filesystem::perms::others_exec & px)) {
-              result = p.path().string();
-              break;
-            }
-          }
-        }
-
-      if (result != "") { std::cout << buffer << " is " << result << std::endl; break; };
-      }
-      if (result == "") {
-        std::cerr << buffer << ": not found" << std::endl;
-      }
-    }
-  }
-
-};
 
 int main() {
-  // Flush after every std::cout / std:cerr
-  commands[2].function = type_cmd;
+  command_handler handler{};
   while (true) {
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
-    std::cout << "$ ";
+    std::cout << "cxrti-shell $ ";
 
     std::string cmd;
     std::cin >> cmd;
 
 
-    for (int i = 0; i < std::size(commands); i++) {
-      if (cmd == commands[i].name) {
-        commands[i].execute();
+    for (int i = 0; i < 3; i++) {
+      if (cmd == handler.get_commands()[i].name) {
+        handler.get_commands()[i].execute();
         break;
       }
-      if (i == std::size(commands)-1 && cmd != commands[i].name) {
-        error_message(cmd);
-      }
+
+      // std::string exe_path = find_executable(cmd, false);
+      //
+      // if (!exe_path.empty()) {
+      //   std::string remaining;
+      //   std::getline(std::cin, remaining);
+      //
+      //   std::vector<std::string> args;
+      //   args.push_back(cmd);
+      //
+      //   std::istringstream iss(remaining);
+      //   std::string arg;
+      //   while (iss >> arg) {
+      //     args.push_back(arg);
+      //   }
+      //
+      //   std::vector<char *> argv;
+      //   for (auto &a : args) {
+      //     argv.push_back(const_cast<char *>(a.c_str()));
+      //   }
+      //
+      //   argv.push_back(nullptr);
+      //
+      //   pid_t pid = fork();
+      //   if (pid == 0) {
+      //     execvp(exe_path.c_str(), argv.data());
+      //     exit(1);
+      //   } else if (pid > 0) {
+      //     waitpid(pid, nullptr, 0);
+      //     break;
+      //   }
+      // }
+      //
+      // if (i == std::size(commands)-1 && cmd != commands[i].name) {
+      //   error_message(cmd);
+      // }
     }
   }
 }
